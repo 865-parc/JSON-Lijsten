@@ -1,8 +1,8 @@
 {
     "1" : {
-       "Naam":"Product1",
+       "Naam":"product2",
        "Beschrijving":"DIt is een test product",
-       "Prijs":"€25",
+       "Prijs":"€50",
        "maakelaar":"bedrijf b.v."
     }
 }
