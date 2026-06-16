@@ -1,43 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Learn External JSON Loading</title>
+    <title>Auto-Updating JSON Cards</title>
 </head>
 <body>
 
     <div id="card-container"></div>
 
     <script>
-        // 2. Point JavaScript to your external JSON file
-        fetch('productenleist.json')
-            .then(response => response.json()) // 3. Turn the raw file data into a JavaScript object
-            .then(jsonData => {
-                
-                // 4. Find the container in our HTML
-                const container = document.getElementById('card-container');
+        // 1. Wrap your code inside a reusable function
+        function loadCards() {
+            fetch('productenleist.json')
+                .then(response => response.json())
+                .then(jsonData => {
+                    const container = document.getElementById('card-container');
+                    
+                    // CRITICAL STEP: Clear out the old cards before drawing the new ones
+                    container.innerHTML = ''; 
 
-                // 5. Loop through the JSON data keys ("1", "2")
-                Object.keys(jsonData).forEach(key => {
-                    const product = jsonData[key];
+                    // 2. Loop and build the cards just like before
+                    Object.keys(jsonData).forEach(key => {
+                        const product = jsonData[key];
+                        const card = document.createElement('div');
 
-                    // 6. Create a temporary HTML 'div' element
-                    const card = document.createElement('div');
+                        card.innerHTML = `
+                            <h2>${product.Naam}</h2>
+                            <p>${product.Beschrijving}</p>
+                            <p>Prijs: ${product.Prijs}</p>
+                            <p>Makelaar: ${product.maakelaar}</p>
+                            <hr>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => console.error("Error loading data:", error));
+        }
 
-                    // 7. Fill that div with the product's information
-                    card.innerHTML = `
-                        <h2>${product.Naam}</h2>
-                        <p>${product.Beschrijving}</p>
-                        <p>Prijs: ${product.Prijs}</p>
-                        <p>Makelaar: ${product.maakelaar}</p>
-                        <hr>
-                    `;
+        // 3. Run the function immediately when the page first opens
+        loadCards();
 
-                    // 8. Push the finished card into the container on the screen
-                    container.appendChild(card);
-                });
-                
-            })
-            .catch(error => console.error("Oh no, something went wrong:", error));
+        // 4. Automatically run the function every 5000 milliseconds (5 seconds)
+        setInterval(loadCards, 5000);
     </script>
 
 </body>
