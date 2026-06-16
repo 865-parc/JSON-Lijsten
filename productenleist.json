@@ -1,4 +1,8 @@
-"Producten":[{
-
+{
+    "1" : {
+       "Naam":"Product1",
+       "Beschrijving":"DIt is een test product",
+       "Prijs":"€15",
+       "maakelaar":"bedrijf b.v."
+    }
 }
-]

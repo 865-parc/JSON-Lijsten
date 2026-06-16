@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Learn Dynamic Cards</title>
+</head>
+<body>
 
+    <div id="card-container"></div>
+
+    <script>
+        // 2. The Data
+        const jsonData = {
+            "1": {
+                "Naam": "Product1",
+                "Beschrijving": "Dit is een test product",
+                "Prijs": "€15",
+                "maakelaar": "bedrijf b.v."
+            },
+            "2": {
+                "Naam": "Product2",
+                "Beschrijving": "Dit is een test product",
+                "Prijs": "€14",
+                "maakelaar": "bedrijf2 b.v."
+            }
+        };
+
+        // 3. Find the container in our HTML
+        const container = document.getElementById('card-container');
+
+        // 4. Loop through the data keys ("1", "2", etc.)
+        Object.keys(jsonData).forEach(key => {
+            const product = jsonData[key]; // Get the data for this specific product
+
+            // 5. Create a brand new HTML 'div' element in memory
+            const card = document.createElement('div');
+
+            // 6. Fill that div with the product's information
+            card.innerHTML = `
+                <h2>${product.Naam}</h2>
+                <p>${product.Beschrijving}</p>
+                <p>Prijs: ${product.Prijs}</p>
+                <p>Makelaar: ${product.maakelaar}</p>
+                <hr> 
+            `;
+
+            // 7. Push the finished card into the container on the screen
+            container.appendChild(card);
+        });
+    </script>
+
+</body>
+</html>
