@@ -1,46 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Learn Dynamic Cards</title>
+    <title>Learn External JSON Loading</title>
 </head>
 <body>
 
     <div id="card-container"></div>
 
     <script>
-        const jsonData = {
-            "1": {
-                "Naam": "Product1",
-                "Beschrijving": "Dit is een test product",
-                "Prijs": "€15",
-                "maakelaar": "bedrijf b.v."
-            },
-            "2": {
-                "Naam": "Product2",
-                "Beschrijving": "Dit is een test product",
-                "Prijs": "€14",
-                "maakelaar": "bedrijf2 b.v."
-            }
-        };
+        // 2. Point JavaScript to your external JSON file
+        fetch('productenleist.json')
+            .then(response => response.json()) // 3. Turn the raw file data into a JavaScript object
+            .then(jsonData => {
+                
+                // 4. Find the container in our HTML
+                const container = document.getElementById('card-container');
 
-        const container = document.getElementById('card-container');
+                // 5. Loop through the JSON data keys ("1", "2")
+                Object.keys(jsonData).forEach(key => {
+                    const product = jsonData[key];
 
-        Object.keys(jsonData).forEach(key => {
-            const product = jsonData[key]; 
+                    // 6. Create a temporary HTML 'div' element
+                    const card = document.createElement('div');
 
-            const card = document.createElement('div');
+                    // 7. Fill that div with the product's information
+                    card.innerHTML = `
+                        <h2>${product.Naam}</h2>
+                        <p>${product.Beschrijving}</p>
+                        <p>Prijs: ${product.Prijs}</p>
+                        <p>Makelaar: ${product.maakelaar}</p>
+                        <hr>
+                    `;
 
-            card.innerHTML = `
-                <h2>${product.Naam}</h2>
-                <p>${product.Beschrijving}</p>
-                <p>Prijs: ${product.Prijs}</p>
-                <p>Makelaar: ${product.maakelaar}</p>
-                <hr> 
-            `;
-
-            
-            container.appendChild(card);
-        });
+                    // 8. Push the finished card into the container on the screen
+                    container.appendChild(card);
+                });
+                
+            })
+            .catch(error => console.error("Oh no, something went wrong:", error));
     </script>
 
 </body>
