@@ -10,7 +10,7 @@
     <script>
         // 1. Wrap your code inside a reusable function
         function loadCards() {
-            fetch('productenleist.json')
+            fetch('https://865-parc.github.io/JSON-Lijsten/productenleist.json')
                 .then(response => response.json())
                 .then(jsonData => {
                     const container = document.getElementById('card-container');
